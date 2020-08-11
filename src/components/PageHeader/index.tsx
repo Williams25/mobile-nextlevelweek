@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styles from './styles'
 import { View, Text, Image } from 'react-native'
 
@@ -10,10 +10,11 @@ import logo from '../../../assets/images/logo.png'
 
 
 interface PageHeaderProps {
-  title: string
+  title: string,
+  headerRight?: ReactNode 
 }
 
-const PageHeader: React.FC = ({ title }) => {
+const PageHeader: React.FC<PageHeaderProps> = (props) => {
   const { navigate } = useNavigation()
   const handleGoBack = () => navigate('Landing')
 
@@ -27,9 +28,15 @@ const PageHeader: React.FC = ({ title }) => {
         <Image source={logo} resizeMode="contain" />
       </View>
 
-      <Text style={styles.title}>
-        {title}
-      </Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>
+          {props.title}
+        </Text>
+
+        {props.headerRight}
+      </View>
+
+      {props.children}
     </View>
   )
 }
